@@ -77,6 +77,10 @@ TiFramework.core = TiFramework.prototype = function(context) {
 				this.context = Ti.UI.createTabGroup();
 				break;
 				
+			case 'navigationgroup':
+	            this.context = Ti.UI.iPhone.createNavigationGroup();				
+				break;
+				
 			case 'row':
 				this.context = Ti.UI.createTableViewRow();
 				break;	
@@ -202,8 +206,8 @@ TiFramework.core = TiFramework.prototype = function(context) {
 		element.context.appendRow(this.context);
 	
 		return this;
-	};		
-	
+	};
+		
 	/** Open the current context
 	 *
 	 * @param object opts
@@ -212,7 +216,7 @@ TiFramework.core = TiFramework.prototype = function(context) {
 		this.context.open(opts);
 		
 		return this;
-	};	
+	};
 	
 	/** Helper method of getting the children of an object
 	 *
@@ -243,7 +247,27 @@ TiFramework.core = TiFramework.prototype = function(context) {
 		}
 		
 		return this;
-	};	
+	};
+	
+	/** Wrapper for native hideNavBar method
+	 *
+	 */
+	this.hideNavBar = function() {
+		
+		this.context.hideNavBar();
+		
+		return this;
+	};
+	
+	/** Wrapper for native hideTabBar method
+	 *
+	 */
+	this.hideTabBar = function() {
+		
+		this.context.hideTabBar();
+		
+		return this;
+	};		
 
 /** --- UI ELEMENTS --- */
 	
@@ -335,27 +359,7 @@ TiFramework.core = TiFramework.prototype = function(context) {
 		this.context.addTab(tab);
 		
 		return this;
-	};	
-	
-	/** Wrapper for native hideNavBar method
-	 *
-	 */
-	this.hideNavBar = function() {
-		
-		this.context.hideNavBar();
-		
-		return this;
-	};
-	
-	/** Wrapper for native hideTabBar method
-	 *
-	 */
-	this.hideTabBar = function() {
-		
-		this.context.hideTabBar();
-		
-		return this;
-	};		
+	};			
 
 /** --- ANIMATION METHODS --- */
 	/** Slide an element in
@@ -490,8 +494,14 @@ TiFramework.prototype.extend = function(name, extension) {
 	// I'm not sure of another way to do this.
 	TiFramework.prototype[extName] = TiFramework.core.prototype[extName] = function(args) {
 		extension(args);
-		
-		return this;
+
+		// Detect if the extension will create a new context (must be defined
+		// in the extension to work, currently)
+		if(typeof context == 'object') {
+			return new TiFramework.core(context);
+		} else {
+			return this;
+		}
 	};
 };
 
