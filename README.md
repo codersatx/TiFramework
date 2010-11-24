@@ -24,6 +24,8 @@ If you want to make it better
 -----------------------------
 I'm definitely not the smartest on Github so if you see a way to make the framework much better, add more functionality, etc.  Please contribute!  As the framework grows I'd love to post some info on best practices, proper naming and coding conventions, etc.  This thing will evolve as long as others are contributing and helping improve it!
 
+Also, I'm starting a website that will be used for technical documentation, tutorials, and more.  If you'd like to help let me know!
+
 
 How do I use it?
 -----------------------------
