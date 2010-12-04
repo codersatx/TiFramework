@@ -163,15 +163,19 @@ TiFramework.core = TiFramework.prototype = function(context) {
 	 * @param object opts
 	 */
 	this.setOpts = function(opts) {		
-		if(opts) {
-			for(var prop in opts) {
-				if (opts.hasOwnProperty(prop)) {
-					this.context[prop] = opts[prop];
-				}
-			}			
-		}
-	
-		return this;
+	    if(opts) {
+	        for(var prop in opts) {
+	            if (opts.hasOwnProperty(prop)) {
+	                if (typeof(opts[prop].context) == 'undefined') {
+	                    this.context[prop] = opts[prop];
+	                } else {
+	                    this.context[prop] = opts[prop].context;
+	                }
+	            }
+	        }           
+	    }
+
+	    return this;
 	};		
 
 	/** Append current context to the indicated element
