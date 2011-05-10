@@ -1,11 +1,16 @@
 [TiFramework](http://xidlabs.com/) - Wrapper framework for Titanium
 ================================
 
+This Library Has Moved
+--------------------------------------
+Or perhaps better put:  "Forked for the better".  For further enhancements, check out http://adamrenklint.com/projects/adamantium-js
+
 What is it?
 ---------------------------------------
 TiFramework is a helper framework for Appcelerator's Titanium.  It's currently in early (yeah really early) alpha.  Actually, if there's was a letter before alpha then it'd probably be that.
 
 TiFramework condenses the Titanium API further and allows you to chain commands together in a jQuery-esque fashion. This will allow you to keep your code condensed and stay within the familiar methods jQuery to accomplish similar things.
+
 
 Goals
 --------------
