@@ -1,4 +1,4 @@
-[TiFramework](http://xidlabs.com/) - Wrapper framework for Titanium
+TiFramework
 ================================
 
 Looking for the old chain-able library?
