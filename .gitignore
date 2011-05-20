@@ -1,1 +1,9 @@
-/tiaccordion.js
+tmp
+
+.DS_Store
+/.project
+/.settings/
+/api.jsca
+/build/
+/manifest
+/tiapp.xml

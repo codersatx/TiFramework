@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.WebProject">
+		<attributes>
+			<attribute name="hide" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.baseBrowserLibrary"/>
+	<classpathentry excluding="app/layouts/|system/|app/components/|app/controllers/|app/plugins/|app/helpers/" kind="src" path=""/>
+	<classpathentry kind="src" path="app/components"/>
+	<classpathentry kind="src" path="app/controllers"/>
+	<classpathentry kind="src" path="app/helpers"/>
+	<classpathentry kind="src" path="app/layouts"/>
+	<classpathentry kind="src" path="app/plugins"/>
+	<classpathentry kind="src" path="system"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.USER_LIBRARY/Titanium Framework"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
