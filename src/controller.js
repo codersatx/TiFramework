@@ -27,10 +27,6 @@ var Controller = new Class({
 		
 		// By default use 'display()' for any controller that is for display
 		if(typeof this.display == 'function') {
-			if(this.window == null) {
-				this.window = Ti.UI.createWindow();
-			}	
-			
 			this.display();	
 		// Or use a user defined method
 		} else if(typeof this[params.method] == 'function') {
