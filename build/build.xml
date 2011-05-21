@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="tiframework" default="prod" basedir=".">
+
+    <description>TiFramework for Titanium Mobile Build</description>
+
+    <!-- Logging Message -->
+    <echo message="====================================================================="/>
+    <echo message="TiFramework Build Process"/>
+    <echo message=" "/>
+    <echo message="This simple build script will combine all JS files in to one minified version for you to use."/>
+    <echo message=" "/>
+    <echo message="Please fork and issue a pull request via Github if you would like to make this script and/or the framework better!"/>
+    <echo message="====================================================================="/>
+
+    <target name="-load.properties"
+        description="Set properties for this build">
+        <!--YUI Compressor location-->
+        <property name="yui.dir" value="${basedir}/tools/yuicompressor-2.4.6.jar"/>
+        <!--Source JS dir-->
+        <property name="src.dir" value="../src"/>
+        <!--Source Lint/Hint dir-->
+        <property name="jslint.js" value="${basedir}/tools/jshint.js"/>
+        <!--Rhino dir-->
+        <property name="js.jar" value="${basedir}/tools/js.jar"/>
+        <!--Output dir-->
+        <property name="build.dir" value="frameworksource"/>
+        <!--Build version information -->
+        <property name="build.major" value="1"/>
+        <property name="build.minor" value="1"/>
+    </target>
+
+
+    <!--Create build directories-->
+    <target name="-init" depends="-load.properties"
+        description="Create build directory structure">
+        <!--Create the time stamp for the new build-->
+        <tstamp>
+            <format property="TODAY" pattern="EEE, d MMM yyyy HH:mm:ss Z"/>
+        </tstamp>
+        
+        <!--Delete previous build files-->
+        <delete dir="${build.dir}"/>
+        
+        <!--Recreate the build directories-->
+        <mkdir dir="${build.dir}"/>
+        
+        <!--Log the build timestamps to file-->
+        <echo file="${build.dir}/tstamp.txt" append="false">Build Date: ${TODAY}</echo>
+    </target>
+
+
+	 <!--JS Lint-->
+	<target depends="-init" name="-js.lint">
+	    <pathconvert pathsep=" " property="jsfiles">
+	        <fileset dir="${build.dir}">
+	            <include name="*.js"/>
+	        </fileset>
+	    </pathconvert>
+	    <exec dir="${build.dir}/" executable="java" failonerror="true">
+	        <arg line="-jar ${js.jar} ${jslint.js} ${jsfiles}"/>
+	    </exec>
+	    <echo>Finished</echo>
+	</target>
+	
+	
+    <!--Concatenate JS files-->
+    <target name="-js.concatenate" depends="-js.lint" 
+        description="Concatenates specified JavaScript files">
+        <concat destfile="${build.dir}/tiframework.js">
+           <filelist 
+               dir="${src.dir}" 
+               files="core.js"/>
+            <fileset 
+                dir="${src.dir}"
+                includes="*.js"
+                excludes="mootools-core-1.3.2.js, core.js" />
+        </concat>  
+        <echo>Finished</echo>
+    </target>
+
+
+    <!--Minify JS files-->
+    <target name="-js.minify" depends="-js.concatenate" 
+        description="Minifies JavaScript files">
+        <apply executable="java" parallel="false" dest="${build.dir}">
+            <fileset 
+                dir="${build.dir}" 
+                includes="tiframework.js"/>
+            <arg line="-jar"/>
+            <arg path="${yui.dir}"/>
+            <srcfile/>
+            <arg line="-o"/>
+            <mapper type="glob" from="*.js" to="*-min.js"/>
+            <targetfile/>
+        </apply>
+        
+        <echo>Finished</echo>
+    </target>
+
+
+    <!--Build-->
+    <target name="prod" 
+        description="Builds project files for production use"
+        depends="
+            -load.properties, 
+            -init, 
+            -js.concatenate,
+            -js.lint, 
+            -js.minify">
+         <echo>NOTE:  DON'T FORGET TO INCLUDE MOOTOOLS BEFORE THIS LIBRARY!</echo>
+    </target>
+</project>
