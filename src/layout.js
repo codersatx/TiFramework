@@ -10,11 +10,6 @@ var Layout = new Class({
 		// Set the model object for this layout
 		if(typeof this.params.model == 'string') {
 			this.model = TF.getModel(this.params.model);
-			
-			// Register this layout with the model
-			if(this.model && this.params.registerObserver) {
-				this.model.registerObserver(this);	
-			}
 		}
 		
 		// Set the styles object shortcut for this layout

@@ -10,11 +10,6 @@ var Controller = new Class({
 		// Set the model object for this layout
 		if(typeof this.params.model == 'string') {
 			this.model = TF.getModel(this.params.model);
-			
-			// Register this controller as an observer of model events
-			if(this.params.registerObserver) {
-				this.model.registerObserver(this);	
-			}
 		}
 		
 		// If instantiated object assigns a window use it
