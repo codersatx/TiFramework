@@ -1,6 +1,3 @@
-// Include the Mootools core
-Ti.include('mootools-core-1.3.2.js');
-
 /**
  * TiFramework - The global framework object
  * @namespace TiFramework namespace
