@@ -5,7 +5,7 @@ var Model = new Class({
 	
 	initialize: function(params) {
 		// Merge model options with params from instantiated object
-		this.params = TF.merge(this.setOptions, params);
+		this.params = Object.merge(this.setOptions, params);
 		
 		// Set the main data object that can be interfaced with directly if needed
 		this.dataObject = TiFramework.dataSource.setObject(this.params.object);

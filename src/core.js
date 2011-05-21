@@ -89,32 +89,6 @@ TiFramework.recursiveInclude = function(folder) {
 };
 
 /**
- * Merges the properties of the two objects. Taken from Dawson Toth's Redux library.
- * 
- * @param {Object} original The original object
- * @param {Object} overrider The object to merge in
- * @returns {Object} Returns the merged object
- */
-TiFramework.merge = function(original, overrider) {
-    if (original == null) {
-        return overrider || {};
-    }
-    if (overrider == null) {
-        return original;
-    }
-    for (var index in overrider) {
-        if (overrider.hasOwnProperty(index)) {
-            if (typeof original[index] == 'undefined') {
-                original[index] = overrider[index];
-            } else if (typeof overrider[index] == 'object') {
-                original[index] = merge(original[index], overrider[index]);
-            }
-        }
-    }
-    return original;
-};
-
-/**
  * Sets the app theme by including the styles file from the themes dir
  * 
  * @param {String} theme - Name of the theme directory

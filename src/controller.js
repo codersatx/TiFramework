@@ -5,7 +5,7 @@ var Controller = new Class({
 	
 	initialize: function(params) {
 		// Merge controller options with params from instantiated object
-		this.params = TF.merge(this.setOptions, params);
+		this.params = Object.merge(this.setOptions, params);
 		
 		// Set the model object for this layout
 		if(typeof this.params.model == 'string') {
@@ -13,7 +13,7 @@ var Controller = new Class({
 		}
 		
 		// If instantiated object assigns a window use it
-		this.window = (this.params && this.params.window) ? this.params.window : null;
+		this.window = (this.params && this.params.window) ? Ti.UI.createWindow() : null;
 		
 		// Set the layout object for this controller and setup an observer for the model
 		if(typeof this.params.layout == 'string') {
