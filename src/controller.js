@@ -13,7 +13,7 @@ var Controller = new Class({
 		}
 		
 		// If instantiated object assigns a window use it
-		this.window = (this.params && this.params.window) ? Ti.UI.createWindow() : null;
+		this.window = (this.params && this.params.window) ? Ti.UI.createWindow(this.params.window) : null;
 		
 		// Set the layout object for this controller and setup an observer for the model
 		if(typeof this.params.layout == 'string') {
