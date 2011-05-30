@@ -9,7 +9,7 @@ var Controller = new Class({
 		
 		// Set the model object for this layout
 		if(typeof this.params.model == 'string') {
-			this.model = TF.getModel(this.params.model);
+			this.model = TF.loadObject('Models', this.params.model);
 		}
 		
 		// If instantiated object assigns a window use it
@@ -17,7 +17,7 @@ var Controller = new Class({
 		
 		// Set the layout object for this controller and setup an observer for the model
 		if(typeof this.params.layout == 'string') {
-			this.layout = TF.getLayout(this.params.layout);
+			this.layout = TF.loadObject('Layouts', this.params.layout);
 		}
 		
 		// By default use 'display()' for any controller that is for display

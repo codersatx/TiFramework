@@ -31,15 +31,16 @@ TiFramework.init = function(params) {
 	TiFramework.COMDIR		= params.COMDIR;
 	TiFramework.DATATYPE	= params.DATATYPE;	
 	TiFramework._LOG		= params.Log;
+	TiFramework.Mode		= params.Mode;
 	TiFramework.defaultController = (params.defaultController) ? params.defaultController : 'Default';
 	
 	/** 
 	 * @namespace TiFramework.App The Default App Namespaces
 	 */
 	TiFramework.App = TFA = {
-		Controller	: {},
-		Layout		: {},
-		Model		: {},
+		Controllers	: {},
+		Layouts		: {},
+		Models		: {},
 		Components	: {},
 		Events		: {},
 		UI			: {}
@@ -51,14 +52,16 @@ TiFramework.init = function(params) {
 	}
 	
 	// Include core framework libraries
-	Ti.include(
-		'framework/utilities.js',		
-		'framework/model.js',
-		'framework/layout.js',
-		'framework/controller.js',
-		'framework/component.js',
-		'framework/request.js'
-	);
+	if(params.Mode == 'development') {
+		Ti.include(
+			'framework/utilities.js',		
+			'framework/model.js',
+			'framework/layout.js',
+			'framework/controller.js',
+			'framework/component.js',
+			'framework/request.js'
+		);	
+	}
 	
 	// Customary Startup message in log
 	TiFramework.log({ msg: '*** TiFramework Framework Initialized ***', info: true });
@@ -72,6 +75,7 @@ TiFramework.init = function(params) {
  * 
  * @param {String} folder
  */
+// FIXME This doesn't work on device.  Don't think there is a way to get it to work either.
 TiFramework.recursiveInclude = function(folder) {
 	var path 	= TiFramework.APPDIR + '/' + folder,
 		file 	= Ti.Filesystem.getFile( Ti.Filesystem.resourcesDirectory + '/' + path ),
@@ -86,6 +90,37 @@ TiFramework.recursiveInclude = function(folder) {
 			Ti.include(path + '/' + listing[i]);	
 		}
 	};
+};
+
+/**
+ * Include a new object / file
+ * 
+ * @param {String} type - The type of object this will belong
+ * @param {String} name - The name of the object to create
+ * @param {Object} params - The params to pass to the object constructor
+ * @return {mixed}
+ */
+TiFramework.loadObject = function(type, name, params) {
+	if(TFA[type] == null) {
+		// If the type / namespace doesn't exist
+	    TF.log({
+	    	msg: 'ERROR: Trying to load an object that does not exist in the TFA namespace', 
+	    	error: true 
+	    });
+	    return false;
+	} else if(TFA[type][name] == null) {
+		// If the name of the type object doesn't exist
+		Ti.include(TF.APPDIR + '/' + type.toLowerCase() + '/' + name.toLowerCase() + '.js');
+		
+		TF.log(type + ' ' + name + ' Loaded');
+		
+		return new TFA[type][name](params); 
+	} else {
+		// If the name of the type object has already been loaded / exists
+		TF.log(type + ' ' + name + ' Loaded');
+		
+		return new TFA[type][name](params);
+	}
 };
 
 /**
@@ -106,7 +141,7 @@ TiFramework.setTheme = function(theme) {
  * @return {Object} layout
  */
 TiFramework.getLayout = function(name, params) {
-	var layout = new TFA.Layout[name](params);
+	var layout = new TFA.Layouts[name](params);
 	return layout;
 };	
 
@@ -118,7 +153,7 @@ TiFramework.getLayout = function(name, params) {
  * @return {Object} model
  */
 TiFramework.getModel = function(name, params) {
-	var model = new TFA.Model[name](params);
+	var model = new TFA.Models[name](params);
 	return model;
 };
 
@@ -126,11 +161,10 @@ TiFramework.getModel = function(name, params) {
  * Gets the style properties
  * 
  * @param {String} name - Name of style object
- * @param {Object} params - Params object
  * @return {Object} styles
  */
-TiFramework.getStyles = function(name, params) {
-	var styles = TiFramework.App.Styles[name];
+TiFramework.getStyles = function(name) {
+	var styles = TFA.Styles[name];
 	return styles;
 };
 

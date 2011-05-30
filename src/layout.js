@@ -9,7 +9,7 @@ var Layout = new Class({
 		
 		// Set the model object for this layout
 		if(this.params && typeof this.params.model == 'string') {
-			this.model = TF.getModel(this.params.model);
+			this.model = TF.loadObject('Models', this.params.model);
 		}
 		
 		// Set the styles object shortcut for this layout
