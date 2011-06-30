@@ -7,8 +7,14 @@ var Model = new Class({
 		// Merge model options with params from instantiated object
 		this.params = Object.merge(this.setOptions, params);
 		
-		// Set the main data object that can be interfaced with directly if needed
-		this.dataObject = TiFramework.dataSource.setObject(this.params.object);
+		// Set the main data object.  For use with TiStorange component only
+		if(TiFramework.DATATYPE === 'TiStorage') {
+			this.dataObject = TiFramework.dataSource.setObject(this.params.object);	
+		}
+		
+		if(TiFramework.dataSource.registerModel) {
+			TiFramework.dataSource.registerModel(this.structure);
+		}
 	},
 	
 	Create: function(params) {

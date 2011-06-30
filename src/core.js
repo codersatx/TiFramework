@@ -52,7 +52,7 @@ TiFramework.init = function(params) {
 	}
 	
 	// Include core framework libraries
-	if(params.Mode == 'development') {
+	if(params.Mode === 'development') {
 		Ti.include(
 			'framework/utilities.js',		
 			'framework/model.js',
